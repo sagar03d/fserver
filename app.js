@@ -6,13 +6,13 @@ var logger = require('morgan');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const env = require('dotenv').config()
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var adminsRouter = require('./routes/admin');
 
-const dburi = "mongodb+srv://strechx123:Fortunamajor112@cluster0.jrjax.mongodb.net/fileos?retryWrites=true&w=majority";
-mongoose.connect(dburi, {useNewUrlParser:true, useUnifiedTopology: true })
+mongoose.connect(process.env.DB_URL, {useNewUrlParser:true, useUnifiedTopology: true })
       .then(() => console.log('Database Connected'))
       .catch(err => console.log(err));
 
@@ -22,7 +22,11 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(session({secret:'XASDASDA'}));
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true
+}));
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json({ type: 'application/*+json' }));
