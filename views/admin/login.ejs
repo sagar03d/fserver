@@ -71,7 +71,7 @@
         //handle success
 
         iziToast.success({timeout: 2000, icon: 'fa fa-bolt', title: 'Logged In', message: 'Authorized Personnel Access Approved'});
-        window.location.href = "/admin/home";
+        window.location.href = "/admin/chat";
       })
       .catch(function (response) {
         iziToast.error({timeout: 5000, title: 'Error', message: 'You are not allowed'});
